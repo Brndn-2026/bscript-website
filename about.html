@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About BScript</title>
+    <link rel="stylesheet" href="stylesa.css">
+</head>
+<body>
+    <header>
+            <h1>About BScript</h1>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+    <main>
+    <section id="introduction">
+        <h2>About BScript</h2>
+        <p>BScript is a very simple scripting language.</p>
+        <p>It is very simple even loopin is. Here's an example code : <code>repeat 10 print hello world</code></p>
+        <p>Currently the version is: <span id="version-container">Loading...</span></p>
+    
+        <script>
+        // Fetch the version from the bscript repository
+            fetch('https://cdn.jsdelivr.net/gh/Brndn-2026/bscript@main/version.txt')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(version => {
+                // Safely update only the version text placeholder, trimming any extra whitespace
+                    document.getElementById('version-container').textContent = version.trim();
+                })
+                .catch(error => {
+                    console.error('Error fetching version:', error);
+                    document.getElementById('version-container').textContent = 'Unable to fetch version';
+                });
+    </script>
+</section>
+    </main>
+</html>
