@@ -45,22 +45,23 @@
 
     </body>
     <script>
-        fetch('https://cdn.jsdelivr.net/gh/Brndn-2026/bscript-website@main/deployed.txt')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(isdeployed => {
-                // Safely update only the version text placeholder, trimming any extra whitespace
-                    if (isdeployed.trim() === 'true') {
-                    } else {
-                        window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
-                    }
-                })
-                .catch(error => {
-                    console.error('Error fetching version:', error);
-                });
+        // Adding a timestamp query parameter (?t=...) prevents browser/CDN caching
+const deploymentUrl = 'https://brndn-2026.github.io/bscript-website/deployed.txt?t=' + new Date().getTime();
+
+fetch(deploymentUrl)
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.text();
+    })
+    .then(isdeployed => {
+        if (isdeployed.trim() !== 'true') {
+            window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
+        }
+    })
+    .catch(error => {
+        console.error('Error checking deployment status:', error);
+        // Optional: Uncomment below if you want to redirect when fetch fails
+        // window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
+    });
     </script>
 </html>
