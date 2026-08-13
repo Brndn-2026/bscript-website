@@ -55,7 +55,6 @@
                 .then(isdeployed => {
                 // Safely update only the version text placeholder, trimming any extra whitespace
                     if (isdeployed.trim() === 'true') {
-                        window.location.href = "https://brndn-2026.github.io/bscript-website/index.html";
                     } else {
                         window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
                     }
