@@ -45,23 +45,26 @@
 
     </body>
     <script>
-        // Adding a timestamp query parameter (?t=...) prevents browser/CDN caching
-const deploymentUrl = 'https://brndn-2026.github.io/bscript-website/deployed.txt?t=' + new Date().getTime();
+     <script>
+    // Only run the deployment check if we are actually on the main index page
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('bscript-website/')) {
+        
+        const deploymentUrl = 'https://brndn-2026.github.io/bscript-website/deployed.txt?t=' + new Date().getTime();
 
-fetch(deploymentUrl)
-    .then(response => {
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.text();
-    })
-    .then(isdeployed => {
-        if (isdeployed.trim() !== 'true') {
-            window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
-        }
-    })
-    .catch(error => {
-        console.error('Error checking deployment status:', error);
-        // Optional: Uncomment below if you want to redirect when fetch fails
-        // window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
-    });
+        fetch(deploymentUrl)
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.text();
+            })
+            .then(isdeployed => {
+                if (isdeployed.trim() !== 'true') {
+                    window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
+                }
+            })
+            .catch(error => {
+                console.error('Error checking deployment status:', error);
+            });
+    }
+</script>
     </script>
 </html>
