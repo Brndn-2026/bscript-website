@@ -44,26 +44,30 @@
         </footer>
 
     </body>
-    <script>
-    // Only run the deployment check if we are actually on the main index page
-    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('bscript-website/')) {
-        
-        const deploymentUrl = 'https://brndn-2026.github.io/bscript-website/deployed.txt?t=' + new Date().getTime();
+   <script>
+    const deploymentUrl = 'https://brndn-2026.github.io/bscript-website/deployed.txt?t=' + new Date().getTime();
 
-        fetch(deploymentUrl)
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.text();
-            })
-            .then(isdeployed => {
-                if (isdeployed.trim() !== 'true') {
-                    window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
-                }
-            })
-            .catch(error => {
-                console.error('Error checking deployment status:', error);
-            });
-    }
-</script>
+    fetch(deploymentUrl)
+        .then(response => {
+            if (!response.ok) throw new Error('Network response was not ok');
+            return response.text();
+        })
+        .then(isdeployed => {
+            // Clean up the text completely (lowercase it and remove all whitespace/newlines)
+            const status = isdeployed.trim().toLowerCase();
+            
+            // Print what it actually found to your browser console (Press F12 to check)
+            console.log("Deployment status read as:", JSON.stringify(status));
+
+            if (status === 'true') {
+                console.log("Site is active.");
+            } else {
+                console.log("Site is NOT true. Redirecting...");
+                window.location.href = "https://brndn-2026.github.io/bscript-website/notdeployed.html";
+            }
+        })
+        .catch(error => {
+            console.error('Error checking deployment status:', error);
+        });
     </script>
 </html>
